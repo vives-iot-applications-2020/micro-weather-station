@@ -52,6 +52,7 @@
 * mqtt broker: `eu.thethings.network`
 * mqtt username: `micro-weather-station`
 * mqtt password: zie mail/teams
+* matt topic: `+/devices/+/up`
 
 ## Mockup Frontend UI
 
