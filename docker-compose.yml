@@ -1,0 +1,49 @@
+version: '3.0'
+services:
+  # ingest:
+      # build:
+      #   context: ./frontend
+      # depends_on:
+      #   - influxdb
+  # backend: 
+      # build:
+      #   context: ./backend
+      # depends_on:
+      #   - influxdb
+      #   - mongodb
+  # frontend:
+      # build:
+      #   context: ./frontend
+      # depends_on:
+      #   - influxdb
+      #   - mongodb
+
+  influxdb:
+    image: 'influxdb'
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+  mongodb:
+    image: 'mongo'
+    volumes:
+      - mongodb-data:/data/db   
+  redis:
+    image: 'redis'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+  grafana:
+    image: 'grafana/grafana'
+    depends_on: 
+      - influxdb
+    ports:
+      - 3000
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+      - GF_ENABLE_GZIP=true
+      - PLUGINS=redis-datasource
+
+volumes:
+  influxdb-data:
+  redis-data:
+  mongodb-data:
